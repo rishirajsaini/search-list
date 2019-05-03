@@ -6,7 +6,9 @@ import {jsonData} from'./../json/dummy';
 class SearchInputComponent extends Component {
 	state = {
 		searchText: '',
-		searchData:[]
+		searchData:[],
+		searchStatus:''
+		
 	}
 	
 	handleChange(e){
@@ -23,6 +25,9 @@ class SearchInputComponent extends Component {
 			searchArray.push(jsonData[i]);
 		  }
 		}
+		if(searchArray.length == 0) {
+			this.setState({searchStatus:'Sorry No Matches Found'})
+		}
 		
 		this.setState({searchData:searchArray})
 	}
@@ -33,7 +38,8 @@ class SearchInputComponent extends Component {
 		<div>
 		  <input type = 'text' onChange = {(e)=>this.handleChange(e)} value = {this.state.searchText} />
 		  <input type = 'button' onClick = {(e)=>this.search(e)} value = 'Search' />
-			  {this.state.searchData.length > 0 ? <ListComponent data = {this.state.searchData} />: 'No Record Found'}
+		  <br/>
+			  {this.state.searchData.length > 0 ? <ListComponent data = {this.state.searchData} />: <span>{this.state.searchStatus}</span> }
 		</div>
 	  );
 	}
